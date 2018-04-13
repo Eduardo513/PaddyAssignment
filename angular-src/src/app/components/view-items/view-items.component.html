@@ -1,0 +1,26 @@
+<ul class="list-unstyled">
+  <li class="card-body" *ngFor="let item of itemList">
+    <div class="row">
+      <div class="cold-md-8 col-sm-4">
+        <!-- <img style="max-height: 100%; max-width: 100%;" *ngIf="item.image" class="img-fluid" [src]="item.image" alt=""> -->
+        <!-- <img *ngIf="user.image" class="img-fluid" src="{{user.image}}" alt=""> -->
+        <!-- <img *ngIf="user.image" class="img-fluid" bind-src="user.image" alt=""> -->
+      </div>
+      <div class="col-sm-8 col-sm-8">
+        <h3 [ngStyle]="currentStyles">Title: {{ item.title }} </h3>
+        <ul class="list-group">
+          <li class="list-group-item">Author: {{item.author}}</li>
+          <li class="list-group-item">Category: {{item.category}}</li>
+          <li class="list-group-item">Current Stock: {{item.stock}}</li>
+          <li class="list-group-item">Current Discount: {{item.discount}}</li>
+        </ul>
+        <br>
+        <div [ngStyle]="currentStyles">
+        <button type="submit" (click)="viewItem(item)"
+        mat-raised-button color="primary">View Details</button>
+        </div>
+      </div>
+    </div>
+
+  </li>
+</ul>
