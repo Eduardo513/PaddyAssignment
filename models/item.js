@@ -19,6 +19,9 @@ const ItemSchema = mongoose.Schema({
     stock :{
         type: Number,
     },
+    price :{
+        type: Number,
+    },
     discount :{
         type: Number,
     },

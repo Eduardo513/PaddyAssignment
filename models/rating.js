@@ -14,7 +14,7 @@ const RatingSchema = mongoose.Schema({
     
 });
 
-const Rating = module.exports = mongoose.model('Rating', ItemSchema);
+const Rating = module.exports = mongoose.model('Rating', RatingSchema);
 
 module.exports.getRatingById = function(id, callback){
     Rating.findById(id, callback);

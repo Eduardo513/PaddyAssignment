@@ -23,6 +23,14 @@
             <li *ngIf="authService.loggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}"  >
               <a [routerLink]="['/profile']"> Profile </a>
            </li>
+
+           <li *ngIf="authService.admin()" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}"  >
+            <a [routerLink]="['/create-item']"> Create Items </a>
+         </li>
+
+           <li *ngIf="authService.loggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}"  >
+            <a [routerLink]="['/view-items']"> View Items </a>
+         </li>
        
           <li *ngIf="!authService.loggedIn()"[routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}"  >
             <a   [routerLink]="['/login']"> Login </a> 

@@ -15,6 +15,9 @@ export class CreateItemComponent implements OnInit {
   category;
   image;
   discount;
+  stock;
+  price;
+  user = JSON.parse(localStorage.getItem('user'));
   allItems = []
 
   constructor(
@@ -34,7 +37,9 @@ export class CreateItemComponent implements OnInit {
       author: this.author,
       category: this.category,
       image: this.image,
-      discount: this.discount
+      discount: this.discount,
+      stock: this.stock,
+      price: this.price
     }
 
     this.authService.createItem(newItem).subscribe(data =>{

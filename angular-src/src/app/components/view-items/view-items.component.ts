@@ -22,7 +22,7 @@ export class ViewItemsComponent implements OnInit {
   }
 
   viewItem(item){
-    this.router.navigate(['/item-details', { item: item }]);
+    this.router.navigate(['/item-details', { itemId: item._id }]);
   }
 
 

@@ -1,5 +1,11 @@
 <h2 class ="page-haeder">Register</h2>
 <form (submit)="onRegisterSubmit()">
+
+    <form action="">
+        <input type="radio" [(ngModel)]="adminValue" name="adminValue" value="true"> Admin<br>
+        <input type="radio" [(ngModel)]="adminValue" name="adminValue" value="false"> Normal User<br>
+      </form>
+
   <div class="form-group">
     <label>Name</label>
     <input type="text" [(ngModel)]="name" name="name" class="form-control">
@@ -8,6 +14,16 @@
   <div class="form-group">
     <label>Username</label>
     <input type="text" [(ngModel)]="username" name="username" class="form-control">
+  </div>
+
+  <div class="form-group">
+    <label>Address</label>
+    <input type="text" [(ngModel)]="address" name="address" class="form-control">
+  </div>
+
+  <div class="form-group">
+    <label>Payment Method</label>
+    <input type="text" [(ngModel)]="paymentMethod" name="paymentMethod" class="form-control">
   </div>
 
   <div class="form-group">

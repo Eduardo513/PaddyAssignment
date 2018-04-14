@@ -8,9 +8,12 @@ const User = require('../models/user');
 //Register
 router.post('/register', (req, res, next) => {
     let newUser = new User({
+        admin: req.body.admin,
         name: req.body.name,
         email: req.body.email,
         username: req.body.username,
+        address: req.body.address,
+        paymentMethod: req.body.paymentMethod,
         password: req.body.password
     });
 
@@ -57,7 +60,8 @@ router.post('/authenticate', (req, res, next) => {
                         id: user._id,
                         name: user.name,
                         username: user.username,
-                        email: user.email
+                        email: user.email,
+                        admin: user.admin
                     }
                 });
             }

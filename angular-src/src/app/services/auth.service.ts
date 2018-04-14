@@ -26,6 +26,30 @@ export class AuthService {
       .map(res => res.json());
   }
 
+  createReview(reviewData)
+  {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.post('http://localhost:3000/items/createReview', reviewData, {headers: headers})
+      .map(res => res.json());
+  }
+
+  getItemById(item)
+  {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.put('http://localhost:3000/items/getItemById', item, {headers: headers})
+      .map(res => res.json());
+  }
+
+  getAllReviewsForItem(item)
+  {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.put('http://localhost:3000/items/getAllReviewsForItem', item, {headers: headers})
+      .map(res => res.json());
+  }
+
   getAllItems()
   {
     let headers = new Headers();
@@ -69,6 +93,13 @@ export class AuthService {
   loggedIn()
   {
     return tokenNotExpired("id_token");
+  }
+
+  admin()
+  {
+   const user = JSON.parse(localStorage.getItem('user'));
+    if(user.admin)
+    return true;
   }
 
   logout()

@@ -1,3 +1,59 @@
-<p>
-  item-details works!
-</p>
+<ul class="list-unstyled">
+  <li class="card-body">
+    <div class="row">
+      <div class="cold-md-8 col-sm-4">
+        <!-- <img style="max-height: 100%; max-width: 100%;" *ngIf="item.image" class="img-fluid" [src]="item.image" alt=""> -->
+        <!-- <img *ngIf="user.image" class="img-fluid" src="{{user.image}}" alt=""> -->
+        <!-- <img *ngIf="user.image" class="img-fluid" bind-src="user.image" alt=""> -->
+      </div>
+      <div class="col-sm-8 col-sm-8" *ngIf=itemObject>
+        <h3 [ngStyle]="currentStyles">Title: {{ itemObject.title }} </h3>
+        <ul class="list-group">
+          <li class="list-group-item">Author: {{itemObject.author}}</li>
+          <li class="list-group-item">Category: {{itemObject.category}}</li>
+          <li class="list-group-item">Price: {{itemObject.price}}</li>
+          <li class="list-group-item">Current Stock: {{itemObject.stock}}</li>
+          <li class="list-group-item">Discount: {{itemObject.discount}}</li>
+        </ul>
+        <br>
+        <div [ngStyle]="currentStyles">
+        <button type="submit" (click)="addToCart(itemObject)"
+        mat-raised-button color="primary">Add To Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <form  id="review">
+        <mat-form-field class="example-full-width">
+          <textarea matInput [(ngModel)]="newReview" name="newReview" placeholder="Leave a review"></textarea>
+        </mat-form-field>
+        <button type="submit" (click)="submitReview()" mat-raised-button color="primary">Leave Review</button>
+      </form>
+    </div>
+
+  </li>
+</ul>
+
+<ul class="list-unstyled">
+  <li class="card-body" *ngFor="let review of allReviews">
+    <div class="row">
+      <div class="cold-md-8 col-sm-4">
+        <img style="max-height: 100%; max-width: 100%;"  class="img-fluid" src='assets/images/review.jpg' alt="">
+
+      </div>
+      <div class="col-sm-8 col-sm-8">
+        <h3 [ngStyle]="currentStyles">Posted By: {{review.username}} </h3>
+        <ul class="list-group">
+          <li class="list-group-item">Content: {{review.reviewObj.reviewBody}}</li>
+          <li class="list-group-item">Date Posted: {{review.reviewObj.datePosted}}</li>
+        </ul>
+        <br>
+        <div [ngStyle]="currentStyles">
+       
+        </div>
+      </div>
+    </div>
+
+  </li>
+</ul>

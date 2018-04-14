@@ -25,7 +25,8 @@ export class LoginComponent implements OnInit {
     const user = 
     {
       username: this.username,
-      password: this.password
+      password: this.password,
+     
     }
 
     this.authService.authenticateUser(user).subscribe(data => {

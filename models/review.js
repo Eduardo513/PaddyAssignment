@@ -11,10 +11,13 @@ const ReviewSchema = mongoose.Schema({
     reviewBody :{
         type: String
     },
+    datePosted :{
+        type: String
+    },
     
 });
 
-const Review = module.exports = mongoose.model('Review', ItemSchema);
+const Review = module.exports = mongoose.model('Review', ReviewSchema);
 
 module.exports.getReviewById = function(id, callback){
     Review.findById(id, callback);
@@ -26,6 +29,7 @@ module.exports.getReviewByUserId = function(userId, callback){
 }
 
 module.exports.addReview = function(newReview, callback){
+    console.log(newReview)
     newReview.save(callback);
 }
 
