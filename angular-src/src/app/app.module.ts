@@ -6,6 +6,7 @@ import { HttpModule } from '@angular/http';
 import {RouterModule, Routes} from '@angular/router';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatInputModule} from '@angular/material/input';
+import { AppMaterialModules } from './material.module';
 //import { AppMaterialModules } from './material.module'; //imports all of materials from the materials module
 
 
@@ -27,11 +28,15 @@ import {AuthGuard} from './guards/auth.guard';
 import { CreateItemComponent } from './components/create-item/create-item.component';
 import { ViewItemsComponent } from './components/view-items/view-items.component';
 import { ItemDetailsComponent } from './components/item-details/item-details.component';
+import { ViewCartComponent } from './components/view-cart/view-cart.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
 
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'register', component: RegisterComponent},
+  {path: 'checkout', component: CheckoutComponent},
+  {path: 'view-cart', component: ViewCartComponent },
   {path: 'item-details', component: ItemDetailsComponent},
   {path: 'view-items', component: ViewItemsComponent},
   {path: 'create-item', component: CreateItemComponent},
@@ -52,6 +57,8 @@ const appRoutes: Routes = [
     CreateItemComponent,
     ViewItemsComponent,
     ItemDetailsComponent,
+    ViewCartComponent,
+    CheckoutComponent,
 
    // AppMaterialModules
   ],
@@ -63,6 +70,7 @@ const appRoutes: Routes = [
     FlashMessagesModule,
     BrowserAnimationsModule,
     MatInputModule,
+    AppMaterialModules,
    
 
    

@@ -4,61 +4,76 @@ const config = require('../config/database');
 
 //Item Schema
 const ItemSchema = mongoose.Schema({
-    title :{
+    title: {
         type: String
     },
-    author :{
+    author: {
         type: String,
     },
-    category :{
+    category: {
         type: String,
     },
-    image :{
+    image: {
         type: String,
     },
-    stock :{
+    stock: {
         type: Number,
     },
-    price :{
+    price: {
         type: Number,
     },
-    discount :{
+    discount: {
         type: Number,
     },
-    reviews :[{
+    reviews: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref:'Review'
+        ref: 'Review'
     }],
-    ratings :[{
+    ratings: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref:'Rating'
+        ref: 'Rating'
     }],
 });
 
 const Item = module.exports = mongoose.model('Item', ItemSchema);
 
-module.exports.getItemById = function(id, callback){
+module.exports.getItemById = function (id, callback) {
     Item.findById(id, callback);
 }
 
-module.exports.getItemByTitle = function(title, callback){
-    const query = {title: title}
+module.exports.getItemByTitle = function (title, callback) {
+    const query = { title: title }
     Item.findOne(query, callback);
 }
 
-module.exports.addItem = function(newItem, callback){
+module.exports.addItem = function (newItem, callback) {
     newItem.save(callback);
 }
 
-module.exports.getAllItems = function(callback){
-    return new Promise((resolve, reject) =>{
+module.exports.reduceStock = function (itemId, reductionAmount, callback) {
+    return new Promise((resolve, reject) => {
+        Item.findOneAndUpdate({ _id: itemId },
+            { $inc: { stock: reductionAmount } }, (err, adjustedItem) => {
+                if (err)
+                    return reject(err);
+                else
+                    return resolve(adjustedItem)
+            }
+        );
+
+    });
+
+}
+
+module.exports.getAllItems = function (callback) {
+    return new Promise((resolve, reject) => {
         const query = {}
-        Item.find(query, (err, items) =>{
-            if(err) return reject(err);
+        Item.find(query, (err, items) => {
+            if (err) return reject(err);
             return resolve(items);
         });
     });
-    
+
 }
 
 

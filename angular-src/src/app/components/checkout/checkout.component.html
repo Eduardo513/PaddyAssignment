@@ -1,0 +1,90 @@
+<div class="row">
+  <div class="col-md-6">
+    <h1 class="mat-display-2">Checkout</h1>
+  </div>
+
+  <div class="col-md-6">
+    <div class="btn-group pull-right">
+      <a routerLink="/view-cart" class="btn btn-link">
+        <i class="fa fa-arrow-circle-o-left"></i> Back To Cart
+      </a>
+    </div>
+  </div>
+</div>
+
+
+<ul class="list-unstyled">
+    <li class="card-body">
+      <div class="row">
+        <div class="cold-md-8 col-sm-4">
+            <h3 [ngStyle]="currentStyles">Total Cost: {{finalPrice}}$ </h3>
+            <h3 [ngStyle]="currentStyles">Delivery Address: {{user.address}} </h3>
+        </div>
+        <div class="col-sm-8 col-sm-8">
+         
+         
+         
+        </div>
+      </div>
+  
+    </li>
+  </ul>
+
+
+<ul class="list-unstyled">
+  <li class="card-body">
+    <div class="row">
+      <div class="cold-md-8 col-sm-4">
+        <h3 [ngStyle]="currentStyles">Payment Method: </h3>
+        <form class="example-container">
+
+          <mat-radio-group aria-label="Party accessibility" [(ngModel)]="selectedAccessibility" name="access">
+            <mat-radio-button *ngFor="let access of accessibilityOptions" [value]="access" required>
+            
+              {{access}}
+
+            </mat-radio-button>
+          </mat-radio-group>
+
+        </form>
+      </div>
+      <div class="col-sm-8 col-sm-8">
+        <div *ngIf="selectedAccessibility == 'Card'">
+            <h4 [ngStyle]="currentStyles">Card Details: </h4>
+
+            <mat-form-field class="full-width">
+                <input matInput [(ngModel)]="cardNumber" name="cardNumber" placeholder="Card Number" size="200">
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+                <input matInput [(ngModel)]="cardExpiry" name="cardExpiry" placeholder="Card Expiry" size="100">
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+                <input matInput [(ngModel)]="cvc" name="cvc" placeholder="CVC" size="100">
+            </mat-form-field>
+
+            <div *ngIf="cardNumber != undefined && cardExpiry != undefined && cvc != undefined ">
+                <button type="submit" (click)="confirmPurchase()" mat-raised-button color="primary">Confirm Purchase</button>
+            </div>
+        </div>
+        <div *ngIf="selectedAccessibility == 'PayPal'">
+            <h4 [ngStyle]="currentStyles">PayPal Login: </h4>
+            <mat-form-field class="full-width">
+                <input matInput [(ngModel)]="paypalUsername" name="paypalUsername" placeholder="Username" size="200">
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+                <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="paypalPassword" name="paypalPassword" placeholder="Paypal Password" size="100">
+            </mat-form-field>
+            <div *ngIf="paypalUsername != undefined && paypalPassword != undefined ">
+            <button type="submit" (click)="confirmPurchase()" mat-raised-button color="primary">Confirm Purchase</button>
+        </div>
+          </div>
+       
+       
+      </div>
+    </div>
+
+  </li>
+</ul>

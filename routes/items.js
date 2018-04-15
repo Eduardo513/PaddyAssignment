@@ -53,6 +53,25 @@ router.put('/getItemById', (req, res, next) => {
     });
 });
 
+
+router.put('/addItemToCart', (req, res, next) => {
+ 
+    Item.findById(req.body.itemId, (err, itemObj) =>{
+        if(itemObj.stock <= 0)
+        return res.json({ success: false, msg: 'No Items Left' });
+        else
+        {
+        User.addItemToCart(itemObj, req.body.userId).then(updatedUser =>{
+
+            Item.reduceStock(req.body.itemId, -2).then(reducedStockItem =>{
+                if(reducedStockItem)
+                 return res.json({ success: true, msg: 'Item Added to Shopping Cart' });
+                }); 
+        });
+    }
+    });
+});
+
 router.post('/createReview', (req, res, next) => {
     User.getUserById(req.body.userId, (err, userObj) => {
         if (err)

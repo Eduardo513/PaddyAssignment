@@ -58,6 +58,23 @@ export class AuthService {
       .map(res => res.json());
   }
 
+  getAllItemsInCartForUser(user)
+  {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.put('http://localhost:3000/users/getAllItemsInCartForUser', user, {headers: headers})
+      .map(res => res.json());
+  }
+
+
+  addItemToCart(itemObject)
+  {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.put('http://localhost:3000/items/addItemToCart', itemObject, {headers: headers})
+      .map(res => res.json());
+  }
+
   authenticateUser(user)
   {
     let headers = new Headers();
@@ -97,9 +114,15 @@ export class AuthService {
 
   admin()
   {
+ 
    const user = JSON.parse(localStorage.getItem('user'));
+   if(user== undefined)
+   return false
+   
     if(user.admin)
     return true;
+    else
+    return false
   }
 
   logout()

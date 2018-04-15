@@ -3,6 +3,7 @@ import { ValidateService } from '../../services/validate.service';
 import { AuthService } from '../../services/auth.service';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { Router, ActivatedRoute } from '@angular/router';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-item-details',
@@ -21,7 +22,8 @@ export class ItemDetailsComponent implements OnInit {
     private authService: AuthService,
     private flashMessage: FlashMessagesService,
     private router: Router,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private _location: Location) { }
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
@@ -34,13 +36,32 @@ export class ItemDetailsComponent implements OnInit {
           this.getAllReviews();
         }
         else
-          this.flashMessage.show(data.msg, { cssClass: 'alert-false', timeout: 3000 });
+          this.flashMessage.show(data.msg, { cssClass: 'alert-danger', timeout: 3000 });
       })
 
     });
-
-
   }
+
+  addToCart()
+  {
+    const itemCartDetails = {
+      itemId: this.itemObject,
+      userId: this.user.id
+    }
+    this.authService.addItemToCart(itemCartDetails).subscribe(data=>{
+      if (data.success) {
+        this.flashMessage.show(data.msg, { cssClass: 'alert-success', timeout: 3000 });
+      }
+      else
+        this.flashMessage.show(data.msg, { cssClass: 'alert-danger', timeout: 3000 });
+
+
+    });
+  }
+
+  backClicked() {
+    this._location.back();
+}
 
   getAllReviews() {
     const item = {
@@ -49,10 +70,10 @@ export class ItemDetailsComponent implements OnInit {
     this.authService.getAllReviewsForItem(item).subscribe(data => {
       if (data.success) {
         this.allReviews = data.allReadableReviewObjects;
-        this.flashMessage.show(data.msg, { cssClass: 'alert-true', timeout: 3000 });
+        this.flashMessage.show(data.msg, { cssClass: 'alert-success', timeout: 3000 });
       }
       else
-        this.flashMessage.show(data.msg, { cssClass: 'alert-false', timeout: 3000 });
+        this.flashMessage.show(data.msg, { cssClass: 'alert-danger', timeout: 3000 });
 
     });
 
@@ -70,7 +91,7 @@ export class ItemDetailsComponent implements OnInit {
         if (data.success)
           this.flashMessage.show(data.msg, { cssClass: 'alert-true', timeout: 3000 });
         else
-          this.flashMessage.show(data.msg, { cssClass: 'alert-false', timeout: 3000 });
+          this.flashMessage.show(data.msg, { cssClass: 'alert-danger', timeout: 3000 });
       });
     }
   }
