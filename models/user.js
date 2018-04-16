@@ -23,15 +23,16 @@ const UserSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    paymentMethod: {
-        type: String,
-    },
     admin: {
         type: Boolean,
     },
     shoppingCart: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Item'
+    }],
+    purchaseHistory: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'PurchaseHistory'
     }],
 });
 
@@ -57,6 +58,17 @@ module.exports.addItemToCart = function (item, userId, callback) {
             }
         );
     });
+}
+
+module.exports.getAllUsers = function(callback){
+    return new Promise((resolve, reject) =>{
+        const query = {}
+        User.find(query, (err, users) =>{
+            if(err) return reject(err);
+            return resolve(users);
+        });
+    });
+    
 }
 
 module.exports.getAllShoppingCartItemIdsForUser = function (userId, callback) {

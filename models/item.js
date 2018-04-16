@@ -29,10 +29,6 @@ const ItemSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Review'
     }],
-    ratings: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Rating'
-    }],
 });
 
 const Item = module.exports = mongoose.model('Item', ItemSchema);

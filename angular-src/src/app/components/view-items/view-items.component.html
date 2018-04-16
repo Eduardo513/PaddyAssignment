@@ -1,20 +1,55 @@
+
 <h1 class="mat-display-2">All Items</h1>
+
+<mat-tab-group>
+    <mat-tab label="Table View">
+     
+<div>
+    <table style="width:100%" id="itemTable" class="tablesorter">
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Stock</th>
+            <th>Discount</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of itemList">
+
+            <td>{{item.title}}</td>
+            <td>{{item.author}}</td>
+            <td>{{item.category}}</td>
+            <td>{{item.price}}$</td>
+            <td>{{item.stock}}</td>
+            <td>{{item.discount}}%</td>
+            <td>
+                <button type="submit" (click)="viewItem(item)" mat-raised-button color="primary">View Details</button>
+            </td>
+        </tr>
+      </tbody>
+    </table>
+
+</div>
+</mat-tab>
+<mat-tab label="Fancy View">
+
 <ul class="list-unstyled">
   <li class="card-body" *ngFor="let item of itemList">
     <div class="row">
       <div class="cold-md-8 col-sm-4">
-        <!-- <img style="max-height: 100%; max-width: 100%;" *ngIf="item.image" class="img-fluid" [src]="item.image" alt=""> -->
-        <!-- <img *ngIf="user.image" class="img-fluid" src="{{user.image}}" alt=""> -->
-        <!-- <img *ngIf="user.image" class="img-fluid" bind-src="user.image" alt=""> -->
+     <img style="max-height: 100%; max-width: 100%;" *ngIf="item.image" class="img-fluid" [src]="item.image" alt="">
       </div>
       <div class="col-sm-8 col-sm-8">
         <h3 [ngStyle]="currentStyles">Title: {{ item.title }} </h3>
         <ul class="list-group">
           <li class="list-group-item">Author: {{item.author}}</li>
           <li class="list-group-item">Category: {{item.category}}</li>
-          <li class="list-group-item">Price: {{item.price}}</li>
+          <li class="list-group-item">Price: {{item.price}}$</li>
           <li class="list-group-item">Current Stock: {{item.stock}}</li>
-          <li class="list-group-item">Current Discount: {{item.discount}}</li>
+          <li class="list-group-item">Current Discount: {{item.discount}}%</li>
         </ul>
         <br>
         <div [ngStyle]="currentStyles">
@@ -25,3 +60,8 @@
 
   </li>
 </ul>
+</mat-tab>
+</mat-tab-group>
+
+<!-- <img *ngIf="user.image" class="img-fluid" src="{{user.image}}" alt=""> -->
+<!-- <img *ngIf="user.image" class="img-fluid" bind-src="user.image" alt=""> -->

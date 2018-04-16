@@ -44,7 +44,7 @@ router.put('/getAllItems', (req, res, next) => {
 router.put('/getItemById', (req, res, next) => {
     Item.getItemById(req.body.id, (err, itemObject) => {
         if (itemObject) {
-      
+
 
             res.json({ success: true, itemObject: itemObject, msg: 'Item Retreived' });
         }
@@ -54,21 +54,47 @@ router.put('/getItemById', (req, res, next) => {
 });
 
 
-router.put('/addItemToCart', (req, res, next) => {
- 
-    Item.findById(req.body.itemId, (err, itemObj) =>{
-        if(itemObj.stock <= 0)
-        return res.json({ success: false, msg: 'No Items Left' });
-        else
-        {
-        User.addItemToCart(itemObj, req.body.userId).then(updatedUser =>{
 
-            Item.reduceStock(req.body.itemId, -2).then(reducedStockItem =>{
-                if(reducedStockItem)
-                 return res.json({ success: true, msg: 'Item Added to Shopping Cart' });
-                }); 
-        });
-    }
+router.put('/editItem', (req, res, next) => {
+    Item.findOneAndUpdate({ _id: req.body.id },
+        {
+            $set: {
+                title: req.body.title, 
+                author: req.body.author,
+                category: req.body.category,
+                discount: req.body.discount,
+                stock: req.body.stock,
+                price: req.body.price,
+                image: req.body.image
+            }
+        },{new: true}, (err, editedItem) => {
+            if (err)
+                throw err;
+            if(editedItem)
+                res.json({ success: true, editedItem: editedItem, msg: 'Item Edited' });
+       
+            else{
+                res.json({ success: false, msg: 'Failed to edit Item' });
+            }
+            }
+    );
+});
+
+
+router.put('/addItemToCart', (req, res, next) => {
+
+    Item.findById(req.body.itemId, (err, itemObj) => {
+        if (itemObj.stock <= 0)
+            return res.json({ success: false, msg: 'No Items Left' });
+        else {
+            User.addItemToCart(itemObj, req.body.userId).then(updatedUser => {
+
+                Item.reduceStock(req.body.itemId, -1).then(reducedStockItem => {
+                    if (reducedStockItem)
+                        return res.json({ success: true, msg: 'Item Added to Shopping Cart' });
+                });
+            });
+        }
     });
 });
 
@@ -77,18 +103,19 @@ router.post('/createReview', (req, res, next) => {
         if (err)
             throw err
         else {
-          
-            let newReview = new Review({ 
+
+            let newReview = new Review({
                 user: userObj.id,
                 reviewBody: req.body.reviewBody,
-                datePosted: new Date()
+                datePosted: new Date(),
+                rating: req.body.rating
             })
-           
-            Review.addReview(newReview, (err, reviewObj) => {  
+
+            Review.addReview(newReview, (err, reviewObj) => {
                 if (err) {
                     res.json({ success: false, msg: 'Failed to create Review' });
                 }
-                else{
+                else {
                     res.json({ success: true, msg: 'Review Created' });
                 }
             });
@@ -110,32 +137,35 @@ router.put('/getAllReviewsForItem', (req, res, next) => {
     allReadableReviewObjects = [];
     Item.getItemById(req.body.id, (err, itemObject) => {
         if (itemObject) {
-          if(itemObject.reviews.length == 0)
-          {
-            res.json({ success: false, msg: 'No Reviews on Item' });
-          }
-          else{
-        
-              itemObject.reviews.forEach(function(reviewId, index, array){
-                Review.getReviewById(reviewId, (err, reviewObj)=>{
-                    User.getUserById(reviewObj.user, (err, userObj) =>{
-                        const readableReviewObject = {
-                            reviewObj: reviewObj,
-                            username: userObj.username
-                        }
-                        allReadableReviewObjects.push(readableReviewObject);
-                        if(index == array.length -1)
-                        {
-                            res.json({ success: true, allReadableReviewObjects: allReadableReviewObjects, msg: 'Reviews collected' });
-                        }
-                    });
-                    
+            if (itemObject.reviews.length == 0) {
+                res.json({ success: false, msg: 'No Reviews on Item' });
+            }
+            else {
 
-                   
-                });
-                
-              })
-          }
+                itemObject.reviews.forEach(function (reviewId, index, array) {
+                    Review.getReviewById(reviewId, (err, reviewObj) => {
+                        if(reviewObj)
+                        {
+                        User.getUserById(reviewObj.user, (err, userObj) => {
+                            if(userObj)
+                            {
+                            const readableReviewObject = {
+                                reviewObj: reviewObj,
+                                username: userObj.username
+                            }
+                            allReadableReviewObjects.push(readableReviewObject);
+                            if (index == array.length - 1) {
+                                res.json({ success: true, allReadableReviewObjects: allReadableReviewObjects, msg: 'Reviews collected' });
+                            }
+                        }
+                        });
+
+
+                    }
+                    });
+
+                })
+            }
         }
         else
             res.json({ success: false, msg: 'Failed to retrieve Item' });

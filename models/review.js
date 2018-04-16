@@ -14,6 +14,9 @@ const ReviewSchema = mongoose.Schema({
     datePosted :{
         type: String
     },
+    rating :{
+        type: Number
+    },
     
 });
 

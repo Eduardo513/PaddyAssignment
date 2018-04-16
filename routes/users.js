@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const config = require('../config/database');
 const User = require('../models/user');
 const Item = require('../models/item');
+const PurchaseHistory = require('../models/purchaseHistory');
 
 
 router.post('/register', (req, res, next) => {
@@ -14,7 +15,6 @@ router.post('/register', (req, res, next) => {
         email: req.body.email,
         username: req.body.username,
         address: req.body.address,
-        paymentMethod: req.body.paymentMethod,
         password: req.body.password
     });
 
@@ -28,26 +28,90 @@ router.post('/register', (req, res, next) => {
     });
 });
 
+router.put('/getAllUsers', (req, res, next) => {
+    User.getAllUsers().then(allUsers => {
+        if (allUsers)
+            res.json({ success: true, allUsers: allUsers, msg: 'Users Retreived' });
+        else
+            res.json({ success: false, msg: 'Users Not able to be retrieved' });
+
+    })
+});
+
 
 router.put('/getAllItemsInCartForUser', (req, res, next) => {
     const userId = req.body.id
     var allCartItemObjects = []
     User.getAllShoppingCartItemIdsForUser(userId).then(shoppingCartItemIds => {
+
         if (shoppingCartItemIds.length > 0) {
             shoppingCartItemIds.forEach(function (cartItemId, index, array) {
-                Item.findById(cartItemId, (err, itemObject) =>{
-                    if(itemObject){
+
+                Item.findById(cartItemId, (err, itemObject) => {
+
+                    if (itemObject) {
                         allCartItemObjects.push(itemObject);
                     }
-                    if(allCartItemObjects.length == array.length)
-                    {
+                    if (allCartItemObjects.length == array.length) {
                         res.json({ success: true, allCartItemObjects: allCartItemObjects, msg: 'Cart Items retreived.' });
                     }
                 });
             });
         }
         else
-         res.json({ success: false, msg: "No items in  user's cart." });
+            res.json({ success: false, msg: "No items in  user's cart." });
+    });
+
+});
+
+router.put('/removeItemFromCart', (req, res, next) => {
+    const userId = req.body.userId
+    User.findOneAndUpdate({ _id: userId },
+        { $pull: { shoppingCart: req.body.itemId } }, { new: true }, (err, updatedCart) => {
+            if (err)
+                throw err;
+            if (updatedCart)
+                res.json({ success: true, msg: "Item Removed From Cart" });
+        }
+    );
+
+});
+
+router.put('/confirmPurchase', (req, res, next) => {
+    const userId = req.body.id
+
+    User.findById(userId, (err, userObj) => {
+        if (userObj) {
+            let newHistory = new PurchaseHistory({
+                itemsPurchased: userObj.shoppingCart,
+                purchaseDate: new Date()
+            });
+
+            User.findOneAndUpdate({ _id: userId },
+                { $push: { purchaseHistory: newHistory } }, (err, updatedHistory) => {
+                    if (err)
+                        throw err;
+                }
+            );
+
+            User.findOneAndUpdate({ _id: userId },
+                { $set: { shoppingCart: [] } }, (err, updatedShoppingCart) => {
+                    if (err)
+                        throw err;
+                }
+            );
+
+            PurchaseHistory.addPurchaseHistory(newHistory, (err, savedHistory) => {
+                if (err) {
+                    res.json({ success: false, msg: 'Failed to Complete Purchase' });
+                }
+                else {
+                    res.json({ success: true, msg: 'Purchase Complete' });
+                }
+            });
+
+
+        }
     });
 
 });

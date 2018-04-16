@@ -1,17 +1,42 @@
-
-
-  <div class="row">
-    <div class="col-md-6">
-      <h1 class="mat-display-2">Your Shopping Cart</h1>
-    </div>
-
-    <div class="col-md-6">
-      <div class="btn-group pull-right">
-        <button type="submit" (click)="checkout()" mat-raised-button color="primary">Check Out</button>
-      </div>
-    </div>
+<h1 class="mat-display-2">Your Shopping Cart</h1>
+<div class="btn-group pull-right">
+    <button type="submit" (click)="checkout()" mat-raised-button color="primary">Check Out</button>
   </div>
 
+<mat-tab-group>
+    <mat-tab label="Table View">
+<div>
+    <table style="width:100%" id="itemTable" class="tablesorter">
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Stock</th>
+            <th>Discount</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of allItemsInUsersCart">
+
+            <td>{{item.title}}</td>
+            <td>{{item.author}}</td>
+            <td>{{item.category}}</td>
+            <td>{{item.price}}$</td>
+            <td>{{item.stock}}</td>
+            <td>{{item.discount}}%</td>
+            <td>
+                <button type="submit" (click)="viewItem(item)" mat-raised-button color="primary">View Details</button>
+                <button type="submit" (click)="removeItem(item)" mat-raised-button color="primary">Remove From Cart</button>
+            </td>
+        </tr>
+      </tbody>
+    </table>
+
+</div>
+</mat-tab>
+<mat-tab label="Fancy View">
 
   <ul class="list-unstyled">
     <li class="card-body" *ngFor="let item of allItemsInUsersCart">
@@ -26,7 +51,7 @@
           <ul class="list-group">
             <li class="list-group-item">Author: {{item.author}}</li>
             <li class="list-group-item">Category: {{item.category}}</li>
-            <li class="list-group-item">Price: {{item.price}}</li>
+            <li class="list-group-item">Price: {{item.price}}$</li>
             <li class="list-group-item">Current Stock: {{item.stock}}</li>
             <li class="list-group-item">Current Discount: {{item.discount}}%</li>
           </ul>
@@ -40,3 +65,5 @@
 
     </li>
   </ul>
+</mat-tab>
+</mat-tab-group>

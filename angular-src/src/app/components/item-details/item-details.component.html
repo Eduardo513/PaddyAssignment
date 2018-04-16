@@ -7,65 +7,134 @@
     <div class="pull-right">
       <button (click)="backClicked()" class="btn btn-link">
         <i class="fa fa-arrow-circle-o-left"></i> Back
-    </button>
+      </button>
+      <div *ngIf="isUserAdmin() && !editItem">
+        <button type="submit" (click)="toggleEditItemOn()" mat-raised-button color="primary">Edit Item</button>
+      </div>
+      <div *ngIf="isUserAdmin() && editItem">
+          <button type="submit" (click)="confirmEdit()" mat-raised-button color="primary">Confirm Edit</button>
+          <button type="submit" (click)="toggleEditItemOff()" mat-raised-button color="primary">Cancel</button>
+        </div>
     </div>
   </div>
 </div>
 
+<div *ngIf="!editItem">
+  <ul class="list-unstyled">
+    <li class="card-body">
+      <div class="row">
+        <div class="cold-md-8 col-sm-4">
+            <img style="max-height: 100%; max-width: 100%;" *ngIf="image" class="img-fluid" [src]="image" alt="">
+        </div>
+        <div class="col-sm-8 col-sm-8" *ngIf=itemObject>
+          <h3 [ngStyle]="currentStyles">Title: {{ title }} </h3>
+          <ul class="list-group">
+            <li class="list-group-item">Author: {{author}}</li>
+            <li class="list-group-item">Category: {{category}}</li>
+            <li class="list-group-item">Price: {{price}}$</li>
+            <li class="list-group-item">Current Stock: {{stock}}</li>
+            <li class="list-group-item">Discount: {{discount}}%</li>
+          </ul>
+          <br>
+          <div [ngStyle]="currentStyles">
+            <button type="submit" (click)="addToCart(itemObject)" mat-raised-button color="primary">Add To Cart</button>
 
-<ul class="list-unstyled">
-  <li class="card-body">
-    <div class="row">
-      <div class="cold-md-8 col-sm-4">
-        <!-- <img style="max-height: 100%; max-width: 100%;" *ngIf="item.image" class="img-fluid" [src]="item.image" alt=""> -->
-        <!-- <img *ngIf="user.image" class="img-fluid" src="{{user.image}}" alt=""> -->
-        <!-- <img *ngIf="user.image" class="img-fluid" bind-src="user.image" alt=""> -->
-      </div>
-      <div class="col-sm-8 col-sm-8" *ngIf=itemObject>
-        <h3 [ngStyle]="currentStyles">Title: {{ itemObject.title }} </h3>
-        <ul class="list-group">
-          <li class="list-group-item">Author: {{itemObject.author}}</li>
-          <li class="list-group-item">Category: {{itemObject.category}}</li>
-          <li class="list-group-item">Price: {{itemObject.price}}</li>
-          <li class="list-group-item">Current Stock: {{itemObject.stock}}</li>
-          <li class="list-group-item">Discount: {{itemObject.discount}}</li>
-        </ul>
-        <br>
-        <div [ngStyle]="currentStyles">
-        <button type="submit" (click)="addToCart(itemObject)"
-        mat-raised-button color="primary">Add To Cart</button>
+
+          </div>
         </div>
       </div>
-    </div>
+    </li>
+  </ul>
+</div>
+<div>
 
-    <div>
-      <form  id="review">
-        <mat-form-field class="example-full-width">
-          <textarea matInput [(ngModel)]="newReview" name="newReview" placeholder="Leave a review"></textarea>
-        </mat-form-field>
-        <button type="submit" (click)="submitReview()" mat-raised-button color="primary">Leave Review</button>
-      </form>
-    </div>
+ 
+<div *ngIf="editItem">
+    <ul class="list-unstyled">
+      <li class="card-body">
+        <div class="row">
+          <div class="cold-md-8 col-sm-4">
+              <img style="max-height: 100%; max-width: 100%;" *ngIf="image" class="img-fluid" [src]="image" alt="">
+          </div>
+          <div class="col-sm-8 col-sm-8" *ngIf=itemObject>
+            <h3 [ngStyle]="currentStyles"> <mat-form-field class="full-width">
+                <textarea matInput [(ngModel)]="title" name="title" placeholder="Title: " matTextareaAutosize></textarea>
+            </mat-form-field></h3>
+            <ul class="list-group">
+              <li class="list-group-item"><mat-form-field class="full-width">
+                  <textarea matInput [(ngModel)]="author" name="author" placeholder="Author: " matTextareaAutosize></textarea>
+              </mat-form-field></li>
+              <li class="list-group-item"><mat-form-field class="full-width">
+                  <textarea matInput [(ngModel)]="category" name="category" placeholder="Category: " matTextareaAutosize></textarea>
+              </mat-form-field></li>
+              <li class="list-group-item"><mat-form-field class="full-width">
+                  <textarea matInput [(ngModel)]="price" name="price" placeholder="Price: " matTextareaAutosize></textarea>
+              </mat-form-field></li>
+              <li class="list-group-item"><mat-form-field class="full-width">
+                  <textarea matInput [(ngModel)]="stock" name="stock" placeholder="Stock: " matTextareaAutosize></textarea>
+              </mat-form-field></li>
+              <li class="list-group-item"><mat-form-field class="full-width">
+                  <textarea matInput [(ngModel)]="discount" name="discount" placeholder="Discount " matTextareaAutosize></textarea>
+              </mat-form-field></li>
+              <h4>Pick an Item Picture</h4>
+              <div class="cc-selector">
+                  <input id="normalBook" type="radio" name="logo" [(ngModel)]="myLogo" value="normalBook" checked />
+                  <label class="drinkcard-cc normalBook" for="normalBook"></label>
+              <input id="eBook" type="radio" name="logo" [(ngModel)]="myLogo" value="eBook" />
+              <label class="drinkcard-cc eBook" for="eBook"></label>
+              <input id="audioBook" type="radio" name="logo" [(ngModel)]="myLogo" value="audioBook" />
+              <label class="drinkcard-cc audioBook" for="audioBook"></label>
+          </div>
 
-  </li>
-</ul>
+          
+            </ul>
+            <br>
+            <div [ngStyle]="currentStyles">
+              <button type="submit" (click)="addToCart(itemObject)" mat-raised-button color="primary">Add To Cart</button>
+  
+  
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div>
+
+  <form id="review">
+    <mat-form-field class="example-full-width">
+      <textarea matInput [(ngModel)]="newReview" name="newReview" placeholder="Leave a review"></textarea>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select placeholder="Rating" [(ngModel)]="selectedRating" name="selectedRating">
+        <mat-option *ngFor="let rating of ratingOptions" [value]="rating">{{rating}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button type="submit" (click)="submitReview()" mat-raised-button color="primary">Leave Review</button>
+  </form>
+</div>
+
+
 
 <ul class="list-unstyled">
   <li class="card-body" *ngFor="let review of allReviews">
     <div class="row">
       <div class="cold-md-8 col-sm-4">
-        <img style="max-height: 100%; max-width: 100%;"  class="img-fluid" src='assets/images/review.jpg' alt="">
+        <img style="max-height: 100%; max-width: 100%;" class="img-fluid" src='assets/images/review.jpg' alt="">
 
       </div>
       <div class="col-sm-8 col-sm-8">
         <h3 [ngStyle]="currentStyles">Posted By: {{review.username}} </h3>
         <ul class="list-group">
           <li class="list-group-item">Content: {{review.reviewObj.reviewBody}}</li>
+          <li class="list-group-item">Rating: {{review.reviewObj.rating}}</li>
           <li class="list-group-item">Date Posted: {{review.reviewObj.datePosted}}</li>
         </ul>
         <br>
         <div [ngStyle]="currentStyles">
-       
+
         </div>
       </div>
     </div>

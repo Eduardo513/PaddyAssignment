@@ -42,6 +42,23 @@ export class AuthService {
       .map(res => res.json());
   }
 
+  removeItemFromCart(item)
+  {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.put('http://localhost:3000/users/removeItemFromCart', item, {headers: headers})
+      .map(res => res.json());
+  }
+
+
+  getAllUsers()
+  {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.put('http://localhost:3000/users/getAllUsers', {headers: headers})
+      .map(res => res.json());
+  }
+
   getAllReviewsForItem(item)
   {
     let headers = new Headers();
@@ -55,6 +72,21 @@ export class AuthService {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this.http.put('http://localhost:3000/items/getAllItems', {headers: headers})
+      .map(res => res.json());
+  }
+
+  editItem(item)
+  {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.put('http://localhost:3000/items/editItem', item, {headers: headers})
+      .map(res => res.json());
+  }
+  confirmPurchase(user)
+  {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.put('http://localhost:3000/users/confirmPurchase', user, {headers: headers})
       .map(res => res.json());
   }
 

@@ -30,11 +30,13 @@ import { ViewItemsComponent } from './components/view-items/view-items.component
 import { ItemDetailsComponent } from './components/item-details/item-details.component';
 import { ViewCartComponent } from './components/view-cart/view-cart.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
+import { ViewUsersComponent } from './components/view-users/view-users.component';
 
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'register', component: RegisterComponent},
+  {path: 'view-users', component: ViewUsersComponent},
   {path: 'checkout', component: CheckoutComponent},
   {path: 'view-cart', component: ViewCartComponent },
   {path: 'item-details', component: ItemDetailsComponent},
@@ -59,6 +61,7 @@ const appRoutes: Routes = [
     ItemDetailsComponent,
     ViewCartComponent,
     CheckoutComponent,
+    ViewUsersComponent,
 
    // AppMaterialModules
   ],

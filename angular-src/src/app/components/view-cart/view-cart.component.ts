@@ -29,6 +29,22 @@ export class ViewCartComponent implements OnInit {
 
   }
 
+  removeItem(item){
+    const itemData = {
+      userId: this.user.id,
+      itemId:  item._id
+    }
+    this.authService.removeItemFromCart(itemData).subscribe(data =>{
+      if (data.success) {
+        this.flashMessage.show(data.msg, { cssClass: 'alert-success', timeout: 3000 });
+       
+      }
+      else
+        this.flashMessage.show(data.msg, { cssClass: 'alert-danger', timeout: 3000 });
+    });
+
+  }
+
 
   calculateCartPrice(){
     var totalPrice = 0;

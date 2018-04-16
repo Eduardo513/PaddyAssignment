@@ -18,7 +18,7 @@ export class RegisterComponent implements OnInit {
   address;
   adminValue;
   paymentMethod;
-  
+
   constructor(
     private validateService: ValidateService,
     private authService: AuthService,
@@ -26,6 +26,8 @@ export class RegisterComponent implements OnInit {
     private router:Router) { }
 
   ngOnInit() {
+    
+ 
   }
 
   onRegisterSubmit()
@@ -37,8 +39,7 @@ export class RegisterComponent implements OnInit {
       email: this.email,
       username: this.username,
       address: this.address,
-      paymentMethod: this.paymentMethod,
-      password: this.password
+      password: this.password,
     }
   
 

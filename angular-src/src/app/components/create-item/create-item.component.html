@@ -17,11 +17,6 @@
   </div>
 
   <div class="form-group">
-    <label>Image</label>
-    <input type="text" [(ngModel)]="image" name="image" class="form-control">
-  </div>
-
-  <div class="form-group">
     <label>Price</label>
     <input type="text" [(ngModel)]="price" name="price" class="form-control">
   </div>
@@ -35,6 +30,17 @@
     <label>Discount</label>
     <input type="text" [(ngModel)]="discount" name="discount" class="form-control">
   </div>
+
+  <h4>Pick an Item Picture</h4>
+  <div class="cc-selector">
+          <input id="normalBook" type="radio" name="logo" [(ngModel)]="myLogo" value="normalBook" checked />
+          <label class="drinkcard-cc normalBook" for="normalBook"></label>
+      <input id="eBook" type="radio" name="logo" [(ngModel)]="myLogo" value="eBook" />
+      <label class="drinkcard-cc eBook" for="eBook"></label>
+      <input id="audioBook" type="radio" name="logo" [(ngModel)]="myLogo" value="audioBook" />
+      <label class="drinkcard-cc audioBook" for="audioBook"></label>
+  </div>
+
   <input type="submit" class="btn btn-primary" value="Submit">
 </form>
 </div>

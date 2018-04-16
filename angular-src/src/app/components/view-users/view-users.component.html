@@ -1,0 +1,57 @@
+<h1 class="mat-display-2">All Users</h1>
+
+<mat-tab-group>
+    <mat-tab label="Table View">
+<div>
+    <table style="width:100%" id="userTable" class="tablesorter">
+        <thead>
+        <tr>
+            <th>Username</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Address</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let user of allUsers">
+            <td>{{user.username}}</td>
+            <td>{{user.name}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.address}}$</td>
+            <td>
+                <button type="submit" (click)="viewUsersPurchasingHistory(user)" mat-raised-button color="primary">View Purchasing History</button>
+               
+        </tr>
+      </tbody>
+    </table>
+
+</div>
+</mat-tab>
+<mat-tab label="Fancy View">
+
+  <ul class="list-unstyled">
+    <li class="card-body" *ngFor="let user of allUsers">
+      <div class="row">
+        <div class="cold-md-8 col-sm-4">
+          <!-- <img style="max-height: 100%; max-width: 100%;" *ngIf="item.image" class="img-fluid" [src]="item.image" alt=""> -->
+          <!-- <img *ngIf="user.image" class="img-fluid" src="{{user.image}}" alt=""> -->
+          <!-- <img *ngIf="user.image" class="img-fluid" bind-src="user.image" alt=""> -->
+        </div>
+        <div class="col-sm-8 col-sm-8">
+          <h3 [ngStyle]="currentStyles">Username: {{ user.name }} </h3>
+          <ul class="list-group">
+            <li class="list-group-item">Name: {{user.name}}</li>
+            <li class="list-group-item">Email: {{user.email}}</li>
+            <li class="list-group-item">Address: {{user.address}}</li>
+          </ul>
+          <br>
+          <div [ngStyle]="currentStyles">
+              <button type="submit" (click)="viewUsersPurchasingHistory(user)" mat-raised-button color="primary">View Purchasing History</button>
+          </div>
+        </div>
+      </div>
+
+    </li>
+  </ul>
+</mat-tab>
+</mat-tab-group>
