@@ -59,6 +59,15 @@ export class AuthService {
       .map(res => res.json());
   }
 
+
+  getAllUsersHistories(user)
+  {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.put('http://localhost:3000/users/getAllUsersHistories', user, {headers: headers})
+      .map(res => res.json());
+  }
+
   getAllReviewsForItem(item)
   {
     let headers = new Headers();

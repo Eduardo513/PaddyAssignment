@@ -70,6 +70,7 @@ export class ItemDetailsComponent implements OnInit {
     });
     
   }
+ 
 
   addToCart() {
     const itemCartDetails = {

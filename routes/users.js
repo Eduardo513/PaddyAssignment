@@ -39,6 +39,34 @@ router.put('/getAllUsers', (req, res, next) => {
 });
 
 
+router.put('/getAllUsersHistories', (req, res, next) => {
+
+    allPuchaseHistoryObjects = [];
+    User.findById(req.body.id, (err, userObj) => {
+        if (userObj) {
+            if (userObj.purchaseHistory.length == 0) {
+                return res.json({ success: false, msg: 'User has no Purchasing History' });
+            }
+            else {
+                userObj.purchaseHistory.forEach(function (singleHistoryId, index, array) {
+
+                    PurchaseHistory.findById(singleHistoryId, (err, historyObj) => {
+                        allPuchaseHistoryObjects.push(historyObj);
+
+                        if (index == array.length - 1) {
+                            return res.json({ success: true, allPuchaseHistoryObjects: allPuchaseHistoryObjects, msg: 'Histories Retreived' });
+                        }
+                    });
+                })
+            }
+
+
+        }
+    });
+});
+
+
+
 router.put('/getAllItemsInCartForUser', (req, res, next) => {
     const userId = req.body.id
     var allCartItemObjects = []
@@ -84,7 +112,9 @@ router.put('/confirmPurchase', (req, res, next) => {
         if (userObj) {
             let newHistory = new PurchaseHistory({
                 itemsPurchased: userObj.shoppingCart,
-                purchaseDate: new Date()
+                purchaseDate: new Date(),
+                totalPrice: req.body.finalPrice,
+                paymentMethod: req.body.paymentMethod
             });
 
             User.findOneAndUpdate({ _id: userId },

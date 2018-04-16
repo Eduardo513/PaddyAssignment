@@ -36,8 +36,9 @@ export class ViewUsersComponent implements OnInit {
 
   }
 
-  viewPurchasingHistory(){
-    
+  viewUsersPurchasingHistory(user){
+
+    this.router.navigate(['/users-history', { userId: user._id }]);
   }
 
 }

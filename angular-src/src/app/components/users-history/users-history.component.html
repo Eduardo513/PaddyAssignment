@@ -1,0 +1,33 @@
+
+<h1 class="mat-display-2">All Items</h1>
+
+
+<ul class="list-unstyled">
+  <li class="card-body" *ngFor="let history of allUserHistories">
+    <div class="row">
+      <div class="cold-md-8 col-sm-4">
+     
+      </div>
+      <div class="col-sm-8 col-sm-8">
+        <h3 [ngStyle]="currentStyles">Purchase Date: {{ history.purchaseDate }} </h3>
+        <ul class="list-group">
+          <li class="list-group-item">Payment Method: {{history.paymentMethod}}</li>
+          <li class="list-group-item">Total Cost: {{history.totalPrice}}$</li>
+          <h4 [ngStyle]="currentStyles">Items Purchased </h4>
+          <div *ngFor="let item of history.itemsPurchased">
+              <li class="list-group-item">- {{item}}</li>
+      
+          </div>
+     
+        </ul>
+        <br>
+      
+      </div>
+    </div>
+
+  </li>
+</ul>
+
+
+<!-- <img *ngIf="user.image" class="img-fluid" src="{{user.image}}" alt=""> -->
+<!-- <img *ngIf="user.image" class="img-fluid" bind-src="user.image" alt=""> -->

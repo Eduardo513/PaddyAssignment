@@ -18,8 +18,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { HomeComponent } from './components/home/home.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { ProfileComponent } from './components/profile/profile.component';
+
 
 import {ValidateService} from './services/validate.service';
 import {FlashMessagesModule} from 'angular2-flash-messages';
@@ -31,20 +30,25 @@ import { ItemDetailsComponent } from './components/item-details/item-details.com
 import { ViewCartComponent } from './components/view-cart/view-cart.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { ViewUsersComponent } from './components/view-users/view-users.component';
+import { UsersHistoryComponent } from './components/users-history/users-history.component';
+import { SearchPipePipe } from './search-pipe.pipe';
+import { SearchAuthorPipe } from './search-author.pipe';
+import { SearchCategoryPipe } from './search-category.pipe';
+
 
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'register', component: RegisterComponent},
-  {path: 'view-users', component: ViewUsersComponent},
-  {path: 'checkout', component: CheckoutComponent},
-  {path: 'view-cart', component: ViewCartComponent },
-  {path: 'item-details', component: ItemDetailsComponent},
-  {path: 'view-items', component: ViewItemsComponent},
-  {path: 'create-item', component: CreateItemComponent},
+  {path: 'view-users', component: ViewUsersComponent, canActivate:[AuthGuard]},
+  {path: 'checkout', component: CheckoutComponent, canActivate:[AuthGuard]},
+  {path: 'view-cart', component: ViewCartComponent, canActivate:[AuthGuard]},
+  {path: 'item-details', component: ItemDetailsComponent, canActivate:[AuthGuard]},
+  {path: 'view-items', component: ViewItemsComponent, canActivate:[AuthGuard]},
+  {path: 'create-item', component: CreateItemComponent, canActivate:[AuthGuard]},
+  {path: 'users-history', component: UsersHistoryComponent, canActivate:[AuthGuard]},
   {path: 'login', component: LoginComponent},
-  {path: 'dashboard', component: DashboardComponent, canActivate:[AuthGuard]},
-  {path: 'profile', component: ProfileComponent, canActivate:[AuthGuard]}
+
 ]
 
 @NgModule({
@@ -54,14 +58,17 @@ const appRoutes: Routes = [
     LoginComponent,
     RegisterComponent,
     HomeComponent,
-    DashboardComponent,
-    ProfileComponent,
     CreateItemComponent,
     ViewItemsComponent,
     ItemDetailsComponent,
     ViewCartComponent,
     CheckoutComponent,
     ViewUsersComponent,
+    UsersHistoryComponent,
+    SearchPipePipe,
+    SearchAuthorPipe,
+    SearchCategoryPipe,
+
 
    // AppMaterialModules
   ],

@@ -71,6 +71,12 @@ export class CreateItemComponent implements OnInit {
         stock: this.stock,
         price: this.price
       }
+      //Required Fields
+     if(!this.validateService.validateCreateItem(newItem))
+     {
+       this.flashMessage.show('Please Fill in all fields', {cssClass: 'alert-danger', timeout: 3000});
+      return false;
+     }
 
       this.authService.createItem(newItem).subscribe(data => {
         if (data.success) {

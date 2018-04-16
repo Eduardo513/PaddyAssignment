@@ -11,6 +11,12 @@ const PurchaseHistorySchema = mongoose.Schema({
     purchaseDate :{
         type: Date
     },
+    totalPrice :{
+        type: Number
+    },
+    paymentMethod :{
+        type: String
+    },
     
 });
 

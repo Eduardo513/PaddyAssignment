@@ -46,8 +46,11 @@ export class CheckoutComponent implements OnInit {
   }
 
   confirmPurchase(){
+  
     const userData = {
-      id: this.user.id
+      finalPrice: this.finalPrice,
+      id: this.user.id,
+      paymentMethod: this.selectedAccessibility
     }
     this.authService.confirmPurchase(userData).subscribe(data =>{
       if (data.success) {
